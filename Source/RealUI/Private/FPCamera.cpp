@@ -31,9 +31,10 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//Bind the player input component to the "Move Forward/Back Input (set in the Project Settings)
+	//Bind the player input component to the "Move Forward/Back" Input (set in the Project Settings)
 	PlayerInputComponent->BindAxis("Move Forward/Back", this, &AFPCamera::MoveForward);
-
+	//Bind the player input component to the "Strafe Left/Right" Input (See Project Settings->Input)
+	PlayerInputComponent->BindAxis("Strafe Left/Right", this, &AFPCamera::Strafe);
 
 }
 
