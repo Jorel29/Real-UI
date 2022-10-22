@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "FPCamera.generated.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 
 UCLASS()
 class REALUI_API AFPCamera : public ACharacter
@@ -18,6 +20,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* CameraComponent;
 
 public:	
 	// Called every frame
