@@ -38,7 +38,7 @@ public:
 	void Strafe(float Value);
 
 	//Make the CameraComponent visible to Blueprints anywhere, declare CameraComponent Object
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Components")
 	UCameraComponent* CameraComponent;
 
 };

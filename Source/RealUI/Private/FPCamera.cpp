@@ -10,6 +10,7 @@ AFPCamera::AFPCamera()
 	PrimaryActorTick.bCanEverTick = true;
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
+	CameraComponent->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
