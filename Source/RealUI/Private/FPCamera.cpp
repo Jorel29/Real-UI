@@ -38,3 +38,16 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+//Function that controls the Foward direction of the character
+void AFPCamera::MoveForward(float Value)
+{	
+	FVector FVec = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
+	AddMovementInput(FVec, Value);
+}
+
+//Definition of Strafe left/right direction of the character
+void AFPCamera::Strafe(float Value)
+{
+	FVector RVec = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
+	AddMovementInput(RVec, Value);
+}
