@@ -28,6 +28,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//Move Forward Backward Function
+	UFUNCTION()
+	void MoveForward(float Value);
+
+	//Move Left Right Function
+	UFUNCTION()
+	void Strafe(float Value);
+
 	//Make the CameraComponent visible to Blueprints anywhere, declare CameraComponent Object
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComponent;
