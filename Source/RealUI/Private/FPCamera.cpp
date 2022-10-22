@@ -9,7 +9,7 @@ AFPCamera::AFPCamera()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	CameraComponent = CreateDefaultSubobject<UCameraComponent>()
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"))
 }
 
 // Called when the game starts or when spawned
