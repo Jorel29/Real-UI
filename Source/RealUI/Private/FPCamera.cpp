@@ -18,6 +18,7 @@ void AFPCamera::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCameraClass."));
 }
 
 // Called every frame
