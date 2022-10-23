@@ -5,9 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"
-#include "FPCamera.generated.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "FPCamera.generated.h"
 
 UCLASS()
 class REALUI_API AFPCamera : public ACharacter
