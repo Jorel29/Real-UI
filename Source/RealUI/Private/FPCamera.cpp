@@ -38,6 +38,9 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//Bind the player input component to the "Strafe Left/Right" Input (See Project Settings->Input)
 	PlayerInputComponent->BindAxis("Strafe Left/Right", this, &AFPCamera::Strafe);
 
+	PlayerInputComponent->BindAxis("Pitch Axis", this, &AFPCamera::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAxis("Yaw Axis", this, &AFPCamera::AddControllerYawInput);
 }
 
 //Function that controls the Foward direction of the character
@@ -53,3 +56,5 @@ void AFPCamera::Strafe(float Value)
 	FVector RVec = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
 	AddMovementInput(RVec, Value);
 }
+
+
