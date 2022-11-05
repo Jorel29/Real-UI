@@ -36,6 +36,14 @@ public:
 	//Move Left Right Function
 	UFUNCTION()
 	void Strafe(float Value);
+	
+	//Controller Pitch
+	UFUNCTION()
+	void LookPitch(float Value);
+
+	//Controller Yaw
+	UFUNCTION()
+	void LookYaw(float Value);
 
 	//Make the CameraComponent visible to Blueprints anywhere, declare CameraComponent Object
 	UPROPERTY(EditAnywhere, Category = "Components")
