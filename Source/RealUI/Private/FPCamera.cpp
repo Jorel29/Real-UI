@@ -38,6 +38,7 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	//Bind the player input component to the "Strafe Left/Right" Input (See Project Settings->Input)
 	PlayerInputComponent->BindAxis("Strafe Left/Right", this, &AFPCamera::Strafe);
 
+	//Pitch Axis Bindings
 	PlayerInputComponent->BindAxis("Pitch Axis", this, &AFPCamera::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAxis("Yaw Axis", this, &AFPCamera::AddControllerYawInput);
