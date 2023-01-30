@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components\WidgetInteractionComponent.h"
 #include "FPCamera.generated.h"
 
 UCLASS()
@@ -42,4 +43,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Components")
 	UCameraComponent* CameraComponent;
 
+	//Make WidgetInteractable Component visible to Blueprints
+	UPROPERTY(EditAnywhere, Category = "Components")
+	UWidgetComponent* WidgetComponent;
 };
