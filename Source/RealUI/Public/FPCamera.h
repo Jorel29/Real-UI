@@ -45,5 +45,5 @@ public:
 
 	//Make WidgetInteractable Component visible to Blueprints
 	UPROPERTY(EditAnywhere, Category = "Components")
-	UWidgetComponent* WidgetComponent;
+	UWidgetInteractionComponent* WidgetInteractionComponent;
 };
