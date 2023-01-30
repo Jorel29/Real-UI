@@ -5,9 +5,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/PlayerController.h"
+#include "Components/WidgetInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-//#include "Components/WidgetInteractionComponent.h"
 #include "FPCamera.generated.h"
 
 UCLASS()
@@ -45,6 +45,6 @@ public:
 
 	//Make WidgetInteractable Component visible to Blueprints
 	
-	//UPROPERTY(EditAnywhere, Category = "Components")
-	//UWidgetInteractionComponent* WidgetInteractionComponent;
+	UPROPERTY(EditAnywhere, Category = "Components")
+	UWidgetInteractionComponent* WidgetInteractionComponent;
 };

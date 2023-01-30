@@ -11,8 +11,8 @@ AFPCamera::AFPCamera()
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(RootComponent);
-	//WidgetInteractionComponent = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractionComponent"));
-	//WidgetInteractionComponent->InteractionSource = EWidgetInteractionSource::CenterScreen;
+	WidgetInteractionComponent = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractionComponent"));
+	WidgetInteractionComponent->InteractionSource = EWidgetInteractionSource::CenterScreen;
 }
 
 // Called when the game starts or when spawned
