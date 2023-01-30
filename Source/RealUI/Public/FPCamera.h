@@ -15,6 +15,10 @@ class REALUI_API AFPCamera : public ACharacter
 {
 	GENERATED_BODY()
 
+private:
+	bool canMenuInteract;
+
+
 public:
 	// Sets default values for this character's properties
 	AFPCamera();
@@ -38,6 +42,11 @@ public:
 	UFUNCTION()
 	void Strafe(float Value);
 	
+	UFUNCTION()
+	void MenuInteract();
+
+	//flip the canMenuInteract variable
+	void FlipMenuInteract();
 
 	//Make the CameraComponent visible to Blueprints anywhere, declare CameraComponent Object
 	UPROPERTY(EditAnywhere, Category = "Components")

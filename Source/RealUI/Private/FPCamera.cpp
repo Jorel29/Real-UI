@@ -8,7 +8,7 @@ AFPCamera::AFPCamera()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	canMenuInteract = false;
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(RootComponent);
 	WidgetInteractionComponent = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractionComponent"));
@@ -45,11 +45,19 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("Pitch Axis", this, &AFPCamera::AddControllerPitchInput);
 
 	PlayerInputComponent->BindAxis("Yaw Axis", this, &AFPCamera::AddControllerYawInput);
+
+	//Bind Menu Interact
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AFPCamera::MenuInteract);
+
+}
+void AFPCamera::MenuInteract() {
+
 }
 
 //Function that controls the Foward direction of the character
 void AFPCamera::MoveForward(float Value)
 {	
+	if (!canMenuInteract) { return; }
 	FVector FVec = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
 	AddMovementInput(FVec, Value);
 }
@@ -57,8 +65,20 @@ void AFPCamera::MoveForward(float Value)
 //Definition of Strafe left/right direction of the character
 void AFPCamera::Strafe(float Value)
 {
+	if (!canMenuInteract) { return; }
 	FVector RVec = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
 	AddMovementInput(RVec, Value);
+}
+
+//Toggles boolean for menu interaction
+void AFPCamera::FlipMenuInteract()
+{
+	if (canMenuInteract) {
+		canMenuInteract = false;
+	}
+	else {
+		canMenuInteract = true;
+	}
 }
 
 
