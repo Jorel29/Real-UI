@@ -42,22 +42,34 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("Strafe Left/Right", this, &AFPCamera::Strafe);
 
 	//Pitch Axis Bindings
-	PlayerInputComponent->BindAxis("Pitch Axis", this, &AFPCamera::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("Pitch Axis", this, &AFPCamera::Pitch);
 
-	PlayerInputComponent->BindAxis("Yaw Axis", this, &AFPCamera::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("Yaw Axis", this, &AFPCamera::Yaw);
 
 	//Bind Menu Interact
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AFPCamera::MenuInteract);
 
 }
-void AFPCamera::MenuInteract() {
+void AFPCamera::Pitch(float Value)
+{
+	if (canMenuInteract) { return; }
+	AddControllerPitchInput(Value);
+}
 
+void AFPCamera::Yaw(float Value) 
+{
+	if (canMenuInteract) { return; }
+	AddControllerYawInput(Value);
+}
+void AFPCamera::MenuInteract() 
+{
+	FlipMenuInteract();
 }
 
 //Function that controls the Foward direction of the character
 void AFPCamera::MoveForward(float Value)
 {	
-	if (!canMenuInteract) { return; }
+	if (canMenuInteract) { return; }
 	FVector FVec = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::X);
 	AddMovementInput(FVec, Value);
 }
@@ -65,7 +77,7 @@ void AFPCamera::MoveForward(float Value)
 //Definition of Strafe left/right direction of the character
 void AFPCamera::Strafe(float Value)
 {
-	if (!canMenuInteract) { return; }
+	if (canMenuInteract) { return; }
 	FVector RVec = FRotationMatrix(Controller->GetControlRotation()).GetScaledAxis(EAxis::Y);
 	AddMovementInput(RVec, Value);
 }
@@ -75,9 +87,11 @@ void AFPCamera::FlipMenuInteract()
 {
 	if (canMenuInteract) {
 		canMenuInteract = false;
+		WidgetInteractionComponent->InteractionSource = EWidgetInteractionSource::CenterScreen;
 	}
 	else {
 		canMenuInteract = true;
+		WidgetInteractionComponent->InteractionSource = EWidgetInteractionSource::Mouse;
 	}
 }
 

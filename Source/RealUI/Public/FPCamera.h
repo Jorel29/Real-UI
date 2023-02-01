@@ -34,6 +34,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION()
+	void Pitch(float Value);
+
+	UFUNCTION()
+	void Yaw(float Value);
+
+
 	//Move Forward Backward Function
 	UFUNCTION()
 	void MoveForward(float Value);
