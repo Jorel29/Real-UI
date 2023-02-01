@@ -18,7 +18,6 @@ class REALUI_API AFPCamera : public ACharacter
 private:
 	bool canMenuInteract;
 
-
 public:
 	// Sets default values for this character's properties
 	AFPCamera();
