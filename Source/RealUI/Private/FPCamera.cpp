@@ -9,8 +9,6 @@ AFPCamera::AFPCamera()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	canMenuInteract = false;
-	PC = Cast<APlayerController>(GetController());
-
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(RootComponent);
 	WidgetInteractionComponent = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractionComponent"));
@@ -23,14 +21,21 @@ AFPCamera::AFPCamera()
 void AFPCamera::BeginPlay()
 {
 	Super::BeginPlay();
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCameraClass."));
+	PC = Cast<APlayerController>(GetController());
+	if (PC) {
+		LP = PC->GetLocalPlayer();
+	}
+	if (LP) {
+		Viewport = LP->ViewportClient->Viewport;
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCameraClass.s"));
 }
 
 // Called every frame
 void AFPCamera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("X: %d, Y: %d"), Viewport->GetMouseX(), Viewport->GetMouseY()));
 }
 
 // Called to bind functionality to input
@@ -66,6 +71,7 @@ void AFPCamera::Yaw(float Value)
 void AFPCamera::MenuInteract() 
 {
 	CenterMouse(PC);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("X: %d, Y: %d"), Viewport->GetMouseX(), Viewport->GetMouseY()));
 	FlipMenuInteract();
 }
 
@@ -101,17 +107,13 @@ void AFPCamera::FlipMenuInteract()
 //need to implement for null values
 void AFPCamera::CenterMouse(APlayerController* pc)
 {
-	ULocalPlayer* LocalPlayer = pc->GetLocalPlayer();
-
-	FViewport* Viewport = LocalPlayer->ViewportClient->Viewport;
-
+	
 	FVector2D ViewportSize;
-	LocalPlayer->ViewportClient->GetViewportSize(ViewportSize);
+	LP->ViewportClient->GetViewportSize(ViewportSize);
 
 	const int32 X = static_cast<int32>(ViewportSize.X * 0.5f);
 	const int32 Y = static_cast<int32>(ViewportSize.Y * 0.5f);
 
 	Viewport->SetMouse(X, Y);
-
 }
 

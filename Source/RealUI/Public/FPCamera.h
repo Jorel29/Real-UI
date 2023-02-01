@@ -18,7 +18,8 @@ class REALUI_API AFPCamera : public ACharacter
 private:
 	bool canMenuInteract;
 	APlayerController* PC;
-	
+	ULocalPlayer* LP;
+	FViewport* Viewport;
 public:
 	// Sets default values for this character's properties
 	AFPCamera();
