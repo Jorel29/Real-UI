@@ -35,7 +35,7 @@ void AFPCamera::BeginPlay()
 void AFPCamera::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("X: %d, Y: %d"), Viewport->GetMouseX(), Viewport->GetMouseY()));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("X: %d, Y: %d"), Viewport->GetMouseX(), Viewport->GetMouseY()));
 }
 
 // Called to bind functionality to input
@@ -54,8 +54,10 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("Yaw Axis", this, &AFPCamera::Yaw);
 
 	//Bind Menu Interact
-	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AFPCamera::MenuInteract);
+	PlayerInputComponent->BindAction("InteractMode", IE_Pressed, this, &AFPCamera::MenuInteract);
 
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AFPCamera::PointerPress);
+	PlayerInputComponent->BindAction("Interact", IE_Released, this, &AFPCamera::PointerRelease);
 }
 void AFPCamera::Pitch(float Value)
 {
@@ -68,6 +70,17 @@ void AFPCamera::Yaw(float Value)
 	if (canMenuInteract) { return; }
 	AddControllerYawInput(Value);
 }
+
+void AFPCamera::PointerPress(FKey key) 
+{
+	WidgetInteractionComponent->PressPointerKey(key);
+}
+
+void AFPCamera::PointerRelease(FKey key)
+{
+	WidgetInteractionComponent->ReleasePointerKey(key);
+}
+
 void AFPCamera::MenuInteract() 
 {
 	CenterMouse(PC);
