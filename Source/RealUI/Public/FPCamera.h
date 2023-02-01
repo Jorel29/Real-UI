@@ -53,7 +53,6 @@ public:
 	UFUNCTION()
 	void MenuInteract();
 
-	UFUNCTION()
 	void PointerPress(FKey key);
 	void PointerRelease(FKey key);
 	//flip the canMenuInteract variable
