@@ -28,7 +28,7 @@ void AFPCamera::BeginPlay()
 	if (LP) {
 		Viewport = LP->ViewportClient->Viewport;
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCameraClass.s"));
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using FPSCameraClass.cpp"));
 }
 
 // Called every frame
