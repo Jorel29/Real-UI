@@ -85,7 +85,8 @@ void AFPCamera::PointerRelease(FKey key)
 
 void AFPCamera::ZoomOnCursorPress() 
 {
-	CameraComponent->SetFieldOfView(45.0f);
+	FRotator mouseRotator = FRotator(-1 * (Viewport->GetMouseY()), Viewport->GetMouseX(), 0);
+	CameraComponent->SetFieldOfView(90.0f);
 }
 
 void AFPCamera::ZoomOnCursorRelease() 
