@@ -8,6 +8,7 @@
 #include "Components/WidgetInteractionComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "FPCamera.generated.h"
 
 UCLASS()
@@ -17,6 +18,7 @@ class REALUI_API AFPCamera : public ACharacter
 
 private:
 	bool canMenuInteract;
+	bool zoom;
 	APlayerController* PC;
 	ULocalPlayer* LP;
 	FViewport* Viewport;

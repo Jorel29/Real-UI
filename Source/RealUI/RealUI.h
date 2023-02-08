@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Engine.h"
-
 //Viewport Size
 //const FVector2D ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
 

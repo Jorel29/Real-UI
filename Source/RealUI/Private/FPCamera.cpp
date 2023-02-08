@@ -2,6 +2,7 @@
 
 
 #include "FPCamera.h"
+#include <Kismet/KismetMathLibrary.h>
 
 // Sets default values
 AFPCamera::AFPCamera()
@@ -9,6 +10,7 @@ AFPCamera::AFPCamera()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	canMenuInteract = false;
+	zoom = false;
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(RootComponent);
 	CameraComponent->SetFieldOfView(90.0f);
@@ -63,14 +65,20 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 void AFPCamera::Pitch(float Value)
 {
-	if (canMenuInteract) { return; }
-	AddControllerPitchInput(Value);
+	if (!canMenuInteract != !zoom) { return; }
+	if (zoom)
+		AddControllerPitchInput(0.5 * Value);
+	else
+		AddControllerPitchInput(Value);
 }
 
 void AFPCamera::Yaw(float Value) 
 {
-	if (canMenuInteract) { return; }
-	AddControllerYawInput(Value);
+	if (!canMenuInteract != !zoom) { return; }
+	if (zoom)
+		AddControllerYawInput(0.5 * Value);
+	else
+		AddControllerYawInput(Value);
 }
 
 void AFPCamera::PointerPress(FKey key) 
@@ -85,12 +93,25 @@ void AFPCamera::PointerRelease(FKey key)
 
 void AFPCamera::ZoomOnCursorPress() 
 {
-	FRotator mouseRotator = FRotator(-1 * (Viewport->GetMouseY()), Viewport->GetMouseX(), 0);
-	CameraComponent->SetFieldOfView(90.0f);
+	zoom = true;
+	float X;
+	float Y;
+	if (PC->GetMousePosition(X, Y))
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("X: %d, Y: %d"), X, Y));
+	FRotator targetRotation = FRotator(-1 * (Viewport->GetMouseY()), Viewport->GetMouseX(), 0);
+	FRotator originRotation = APawn::GetViewRotation();
+
+	
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, targetRotation.ToString());
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, originRotation.ToString());
+	CameraComponent->SetWorldRotation(FMath::RInterpTo(originRotation, targetRotation, FApp::GetDeltaTime(), 30.0f) );
+	CameraComponent->SetFieldOfView(70.0f);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, CameraComponent->GetComponentRotation().ToString());
 }
 
 void AFPCamera::ZoomOnCursorRelease() 
 {
+	zoom = false;
 	CameraComponent->SetFieldOfView(90.0f);
 }
 void AFPCamera::MenuInteract() 
@@ -122,10 +143,12 @@ void AFPCamera::FlipMenuInteract()
 	if (canMenuInteract) {
 		canMenuInteract = false;
 		WidgetInteractionComponent->InteractionSource = EWidgetInteractionSource::CenterScreen;
+		PC->SetShowMouseCursor(false);
 	}
 	else {
 		canMenuInteract = true;
 		WidgetInteractionComponent->InteractionSource = EWidgetInteractionSource::Mouse;
+		PC->SetShowMouseCursor(true);
 	}
 }
 
@@ -139,6 +162,6 @@ void AFPCamera::CenterMouse(APlayerController* pc)
 	const int32 X = static_cast<int32>(ViewportSize.X * 0.5f);
 	const int32 Y = static_cast<int32>(ViewportSize.Y * 0.5f);
 
-	Viewport->SetMouse(X, Y);
+	PC->SetMouseLocation(X, Y);
 }
 
