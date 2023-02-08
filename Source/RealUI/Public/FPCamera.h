@@ -59,7 +59,8 @@ public:
 	void FlipMenuInteract();
 
 	void CenterMouse(APlayerController* PC);
-
+	void ZoomOnCursorPress();
+	void ZoomOnCursorRelease();
 	//Make the CameraComponent visible to Blueprints anywhere, declare CameraComponent Object
 	UPROPERTY(EditAnywhere, Category = "Components")
 	UCameraComponent* CameraComponent;

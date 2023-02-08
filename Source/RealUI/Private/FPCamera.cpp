@@ -11,6 +11,7 @@ AFPCamera::AFPCamera()
 	canMenuInteract = false;
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(RootComponent);
+	CameraComponent->SetFieldOfView(90.0f);
 	WidgetInteractionComponent = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractionComponent"));
 	WidgetInteractionComponent->InteractionSource = EWidgetInteractionSource::CenterScreen;
 	WidgetInteractionComponent->SetupAttachment(CameraComponent);
@@ -55,7 +56,8 @@ void AFPCamera::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	//Bind Menu Interact
 	PlayerInputComponent->BindAction("InteractMode", IE_Pressed, this, &AFPCamera::MenuInteract);
-
+	PlayerInputComponent->BindAction("Zoom", IE_Pressed, this, &AFPCamera::ZoomOnCursorPress);
+	PlayerInputComponent->BindAction("Zoom", IE_Released, this, &AFPCamera::ZoomOnCursorRelease);
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AFPCamera::PointerPress);
 	PlayerInputComponent->BindAction("Interact", IE_Released, this, &AFPCamera::PointerRelease);
 }
@@ -81,6 +83,15 @@ void AFPCamera::PointerRelease(FKey key)
 	WidgetInteractionComponent->ReleasePointerKey(key);
 }
 
+void AFPCamera::ZoomOnCursorPress() 
+{
+	CameraComponent->SetFieldOfView(45.0f);
+}
+
+void AFPCamera::ZoomOnCursorRelease() 
+{
+	CameraComponent->SetFieldOfView(90.0f);
+}
 void AFPCamera::MenuInteract() 
 {
 	CenterMouse(PC);
