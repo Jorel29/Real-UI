@@ -98,15 +98,19 @@ void AFPCamera::ZoomOnCursorPress()
 	float Y;
 	if (PC->GetMousePosition(X, Y))
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("X: %d, Y: %d"), X, Y));
-	FRotator targetRotation = FRotator(-1 * (Viewport->GetMouseY()), Viewport->GetMouseX(), 0);
-	FRotator originRotation = APawn::GetViewRotation();
 
+	FVector Direction = (WidgetInteractionComponent->GetLastHitResult().ImpactPoint - WidgetInteractionComponent->GetLastHitResult().TraceStart).GetUnsafeNormal();
+	FRotator targetRotation = FRotator( Y, X, 0);
+	FRotator originRotation = PC->GetControlRotation();
 	
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, Direction.ToString());
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, targetRotation.ToString());
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, originRotation.ToString());
-	CameraComponent->SetWorldRotation(FMath::RInterpTo(originRotation, targetRotation, FApp::GetDeltaTime(), 30.0f) );
-	CameraComponent->SetFieldOfView(70.0f);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, CameraComponent->GetComponentRotation().ToString());
+	//FMath::RInterpTo(originRotation, targetRotation, FApp::GetDeltaTime(), 5.0f);
+	PC->SetControlRotation(originRotation);
+	CameraComponent->SetWorldRotation(targetRotation);
+	CameraComponent->SetFieldOfView(90.0f);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, (targetRotation-originRotation).ToString());
 }
 
 void AFPCamera::ZoomOnCursorRelease() 
