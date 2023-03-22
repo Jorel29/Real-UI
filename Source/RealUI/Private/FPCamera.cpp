@@ -120,12 +120,12 @@ void AFPCamera::ZoomOnCursorPress()
 	Y = FMath::RadiansToDegrees(acosf(FVector::DotProduct(FVector(0,1,0), FVector(0, mouseDirectionLocalSpace.Y, 0))));
 	Z = FMath::RadiansToDegrees(acosf(FVector::DotProduct(FVector(0,0,1), FVector(0, 0, mouseDirectionLocalSpace.Z))));
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, controllerRot.ToString());
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("X: %f,Y: %f, Z: %f"), X, Y-90, -1*(Z-90)));
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("X: %f,Y: %f, Z: %f"), X, Y, 1*(Z)));
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, viewDirectionLocalSpace.ToString());
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, mouseDirectionLocalSpace.ToString());
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::White, Forward.ToString());
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::White, viewDirection.ToString());
 	//FMath::RInterpTo(originRotation, targetRotation, FApp::GetDeltaTime(), 5.0f);
-	PC->SetControlRotation(controllerRot.Add(-1*(Z-90), -1 * (Y - 90), 0));
+	//PC->SetControlRotation(controllerRot.Add(-1*(Z-90), -1 * (Y - 90), 0));
 	CameraComponent->SetFieldOfView(90.0f);
 }
 
