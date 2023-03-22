@@ -114,6 +114,8 @@ void AFPCamera::ZoomOnCursorPress()
 	LP->ViewportClient->GetViewportSize(Screen);
 	if (!PC->DeprojectScreenPositionToWorld(Screen.X, Screen.Y, viewLocation, viewDirection))return;
 	if (!PC->DeprojectMousePositionToWorld(mouseLocation, mouseDirection)) return;
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, mouseDirection.ToString());
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Emerald, mouseLocation.ToString());
 	mouseDirectionLocalSpace = UKismetMathLibrary::InverseTransformDirection(actorTransform, mouseDirection);
 	viewDirectionLocalSpace = UKismetMathLibrary::InverseTransformDirection(actorTransform, viewDirection);
 	X = FMath::RadiansToDegrees(acosf(FVector::DotProduct(FVector(1,0,0), FVector(mouseDirectionLocalSpace.X, 0, 0))));
@@ -125,7 +127,7 @@ void AFPCamera::ZoomOnCursorPress()
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, mouseDirectionLocalSpace.ToString());
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::White, viewDirection.ToString());
 	//FMath::RInterpTo(originRotation, targetRotation, FApp::GetDeltaTime(), 5.0f);
-	//PC->SetControlRotation(controllerRot.Add(-1*(Z-90), -1 * (Y - 90), 0));
+	PC->SetControlRotation(controllerRot.Add(0, -1 * (Y - 90), 0));
 	CameraComponent->SetFieldOfView(90.0f);
 }
 
